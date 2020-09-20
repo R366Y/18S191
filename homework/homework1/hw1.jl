@@ -463,8 +463,14 @@ A better solution is to use the *closest* value that is inside the vector. Effec
 
 # ╔═╡ 802bec56-ee09-11ea-043e-51cf1db02a34
 function extend(v, i)
-	
-	return missing
+	l = length(v)
+	if i ∈ 1:l
+		return v[i]
+	elseif i < 1
+		return v[1]
+	else 
+		return v[l]
+	end
 end
 
 # ╔═╡ b7f3994c-ee1b-11ea-211a-d144db8eafc2
