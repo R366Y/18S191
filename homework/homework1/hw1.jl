@@ -429,7 +429,7 @@ Let's create a vector `v` of random numbers of length `n=100`.
 """
 
 # ╔═╡ 7fcd6230-ee09-11ea-314f-a542d00d582e
-n = 10
+n = 100
 
 # ╔═╡ 7fdb34dc-ee09-11ea-366b-ffe10d1aa845
 v = rand(n)
@@ -509,8 +509,13 @@ md"""
 
 # ╔═╡ 807e5662-ee09-11ea-3005-21fdcc36b023
 function blur_1D(v, l)
+	v_copy = copy(v)
+	v_copy_length = length(v_copy)
 	
-	return missing
+	for i in 1:v_copy_length
+		v_copy[i] = mean([extend(v,k) for k in i-l:i+l])
+	end
+	return v_copy
 end
 
 # ╔═╡ 808deca8-ee09-11ea-0ee3-1586fa1ce282
@@ -536,7 +541,13 @@ md"""
 """
 
 # ╔═╡ ca1ac5f4-ee1c-11ea-3d00-ff5268866f87
+@bind l_box Slider(0:8, show_value=true)
 
+# ╔═╡ 157adc9e-fb6a-11ea-3ae5-df58214a7d49
+colored_line(v)
+
+# ╔═╡ 7b2f0420-fb6c-11ea-078a-7dd19c79a511
+colored_line(blur_1D(v, l_box))
 
 # ╔═╡ 80ab64f4-ee09-11ea-29b4-498112ed0799
 md"""
@@ -554,8 +565,20 @@ Again, we need to take care about what happens if $v_{i -n }$ falls off the end 
 
 # ╔═╡ 28e20950-ee0c-11ea-0e0a-b5f2e570b56e
 function convolve_vector(v, k)
-	
-	return missing
+	c_v = copy(v)
+	l = (length(k)-1) ÷ 2
+	for i in eachindex(c_v)
+		temp = []
+		n = 1
+		for y in i-l:i+l
+			vi = extend(v,y)
+			kn = k[n]
+			push!(temp, vi*kn)
+			n += 1
+		end
+		c_v[i] = sum(temp) 
+	end
+	return c_v
 end
 
 # ╔═╡ 93284f92-ee12-11ea-0342-833b1a30625c
@@ -1439,7 +1462,7 @@ with_sobel_edge_detect(sobel_camera_image)
 # ╠═7e4aeb70-ee1b-11ea-100f-1952ba66f80f
 # ╟─6a05f568-ee1b-11ea-3b6c-83b6ada3680f
 # ╟─f70823d2-ee07-11ea-2bb3-01425212aaf9
-# ╟─e70a84d4-ee0c-11ea-0640-bf78653ba102
+# ╠═e70a84d4-ee0c-11ea-0640-bf78653ba102
 # ╠═ac15e0d0-ee0c-11ea-1eaf-d7f88b5df1d7
 # ╟─9604bc44-ee1b-11ea-28f8-7f7af8d0cbb2
 # ╟─f714699e-ee07-11ea-08b6-5f5169861b57
@@ -1471,7 +1494,9 @@ with_sobel_edge_detect(sobel_camera_image)
 # ╠═807e5662-ee09-11ea-3005-21fdcc36b023
 # ╟─808deca8-ee09-11ea-0ee3-1586fa1ce282
 # ╟─809f5330-ee09-11ea-0e5b-415044b6ac1f
-# ╠═ca1ac5f4-ee1c-11ea-3d00-ff5268866f87
+# ╟─ca1ac5f4-ee1c-11ea-3d00-ff5268866f87
+# ╠═157adc9e-fb6a-11ea-3ae5-df58214a7d49
+# ╠═7b2f0420-fb6c-11ea-078a-7dd19c79a511
 # ╟─ea435e58-ee11-11ea-3785-01af8dd72360
 # ╟─80ab64f4-ee09-11ea-29b4-498112ed0799
 # ╠═28e20950-ee0c-11ea-0e0a-b5f2e570b56e
