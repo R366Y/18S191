@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.11.13
+# v0.11.14
 
 using Markdown
 using InteractiveUtils
@@ -52,7 +52,7 @@ md"_Let's create a package environment:_"
 # ╔═╡ 65780f00-ed6b-11ea-1ecf-8b35523a7ac0
 begin
 	import Pkg
-	Pkg.activate(mktempdir())
+	Pkg.activate(".")
 end
 
 # ╔═╡ 74b008f6-ed6b-11ea-291f-b3791d6d1b35
@@ -87,15 +87,15 @@ md"#### Exerise 1.1
 "
 
 # ╔═╡ f51333a6-eded-11ea-34e6-bfbb3a69bcb0
-random_vect = missing # replace this with your code!
+random_vect = rand(1:10, 10)
 
 # ╔═╡ cf738088-eded-11ea-2915-61735c2aa990
 md"👉 Make a function `mean` using a `for` loop, which computes the mean/average of a vector of numbers."
 
 # ╔═╡ 0ffa8354-edee-11ea-2883-9d5bfea4a236
 function mean(x)
-	
-	return missing
+	result = sum(x)/ size(x)[1]
+	return result
 end
 
 # ╔═╡ 1f104ce4-ee0e-11ea-2029-1d9c817175af
@@ -105,15 +105,14 @@ mean([1, 2, 3])
 md"👉 Define `m` to be the mean of `random_vect`."
 
 # ╔═╡ 2a391708-edee-11ea-124e-d14698171b68
-m = missing
+m = mean(random_vect)
 
 # ╔═╡ e2863d4c-edef-11ea-1d67-332ddca03cc4
 md"""👉 Write a function `demean`, which takes a vector `x` and subtracts the mean from each value in `x`."""
 
 # ╔═╡ ec5efe8c-edef-11ea-2c6f-afaaeb5bc50c
 function demean(x)
-	
-	return missing
+	return mean(x).-x
 end
 
 # ╔═╡ 29e10640-edf0-11ea-0398-17dbf4242de3
@@ -144,8 +143,9 @@ md"""
 
 # ╔═╡ b6b65b94-edf0-11ea-3686-fbff0ff53d08
 function create_bar()
-	
-	return missing
+	v = zero(Vector{Int}(undef,100))
+	v[40:60] .= 1
+	return v
 end
 
 # ╔═╡ 22f28dae-edf2-11ea-25b5-11c369ae1253
@@ -157,8 +157,8 @@ md"""
 
 # ╔═╡ 8c19fb72-ed6c-11ea-2728-3fa9219eddc4
 function vecvec_to_matrix(vecvec)
-	
-	return missing
+	dim_2 = length(vecvec[1])
+	return vcat(reshape.(vecvec, :, dim_2)...)
 end
 
 # ╔═╡ c4761a7e-edf2-11ea-1e75-118e73dadbed
@@ -173,8 +173,12 @@ md"""
 
 # ╔═╡ 9f1c6d04-ed6c-11ea-007b-75e7e780703d
 function matrix_to_vecvec(matrix)
-	
-	return missing
+	dims = size(matrix)
+	res = []
+	for row in 1:dims[1]
+		push!(res, push!([], matrix[row,:]...))
+	end
+	return res
 end
 
 # ╔═╡ 70955aca-ed6e-11ea-2330-89b4d20b1795
@@ -206,7 +210,7 @@ Let's load a picture of Philip again.
 """
 
 # ╔═╡ c5484572-ee05-11ea-0424-f37295c3072d
-philip_file = download("https://i.imgur.com/VGPeJ6s.jpg")
+#philip_file = load("philip.jpg")
 
 # ╔═╡ e86ed944-ee05-11ea-3e0f-d70fc73b789c
 md"_Hi there Philip_"
@@ -219,8 +223,8 @@ md"""
 
 # ╔═╡ f6898df6-ee07-11ea-2838-fde9bc739c11
 function mean_colors(image)
-	
-	return missing
+	cv = channelview(image)
+	return (mean(cv[1,:,:]), mean(cv[2,:,:]), mean(cv[3,:,:]))
 end
 
 # ╔═╡ d75ec078-ee0d-11ea-3723-71fb8eecb040
@@ -236,17 +240,16 @@ md"""
 begin
 	function quantize(x::Number)
 		
-		return missing
+		return floor(x*10)/10
 	end
 	
 	function quantize(color::AbstractRGB)
-		# you will write me in a later exercise!
-		return missing
+		return RGB(quantize(color.r), quantize(color.g), quantize(color.b))
 	end
 	
 	function quantize(image::AbstractMatrix)
 		# you will write me in a later exercise!
-		return missing
+		return quantize.(image)
 	end
 end
 
@@ -285,7 +288,7 @@ md"""
 # ╔═╡ 63e8d636-ee0b-11ea-173d-bd3327347d55
 function invert(color::AbstractRGB)
 	
-	return missing
+	return RGB(1-color.r, 1-color.g, 1-color.b)
 end
 
 # ╔═╡ 2cc2f84e-ee0d-11ea-373b-e7ad3204bb00
@@ -306,9 +309,6 @@ invert(red)
 # ╔═╡ 846b1330-ee0b-11ea-3579-7d90fafd7290
 md"Can you invert the picture of Philip?"
 
-# ╔═╡ 943103e2-ee0b-11ea-33aa-75a8a1529931
-philip_inverted = missing
-
 # ╔═╡ f6d6c71a-ee07-11ea-2b63-d759af80707b
 md"""
 #### Exercise 2.6
@@ -317,19 +317,22 @@ md"""
 
 # ╔═╡ f6e2cb2a-ee07-11ea-06ee-1b77e34c1e91
 begin
+	function clamp(n)
+		return max(min(n, one(n)), zero(n))
+	end
 	function noisify(x::Number, s)
-
-		return missing
+		n = rand(-s:s)
+		return clamp(x + n)
 	end
 	
 	function noisify(color::AbstractRGB, s)
 		# you will write me in a later exercise!
-		return missing
+		return RGB(noisify(color.r,s), noisify(color.g,s), noisify(color.b,s))
 	end
 	
 	function noisify(image::AbstractMatrix, s)
 		# you will write me in a later exercise!
-		return missing
+		return noisify.(image,s)
 	end
 end
 
@@ -383,7 +386,7 @@ decimate(image, ratio=5) = image[1:ratio:end, 1:ratio:end]
 
 # ╔═╡ c8ecfe5c-ee05-11ea-322b-4b2714898831
 philip = let
-	original = Images.load(philip_file)
+	original = Images.load("philip.jpg")
 	decimate(original, 8)
 end
 
@@ -392,6 +395,9 @@ mean_colors(philip)
 
 # ╔═╡ 9751586e-ee0c-11ea-0cbb-b7eda92977c9
 quantize(philip)
+
+# ╔═╡ 943103e2-ee0b-11ea-33aa-75a8a1529931
+philip_inverted = invert.(philip)
 
 # ╔═╡ ac15e0d0-ee0c-11ea-1eaf-d7f88b5df1d7
 noisify(philip, philip_noise)
@@ -423,7 +429,7 @@ Let's create a vector `v` of random numbers of length `n=100`.
 """
 
 # ╔═╡ 7fcd6230-ee09-11ea-314f-a542d00d582e
-n = 100
+n = 10
 
 # ╔═╡ 7fdb34dc-ee09-11ea-366b-ffe10d1aa845
 v = rand(n)
@@ -440,7 +446,7 @@ You've seen some colored lines in this notebook to visualize arrays. Can you mak
 """
 
 # ╔═╡ 01070e28-ee0f-11ea-1928-a7919d452bdd
-
+colored_line(v)
 
 # ╔═╡ 7522f81e-ee1c-11ea-35af-a17eb257ff1a
 md"Try changing `n` and `v` around. Notice that you can run the cell `v = rand(n)` again to regenerate new random values."
@@ -1427,7 +1433,7 @@ with_sobel_edge_detect(sobel_camera_image)
 # ╠═7e4aeb70-ee1b-11ea-100f-1952ba66f80f
 # ╟─6a05f568-ee1b-11ea-3b6c-83b6ada3680f
 # ╟─f70823d2-ee07-11ea-2bb3-01425212aaf9
-# ╠═e70a84d4-ee0c-11ea-0640-bf78653ba102
+# ╟─e70a84d4-ee0c-11ea-0640-bf78653ba102
 # ╠═ac15e0d0-ee0c-11ea-1eaf-d7f88b5df1d7
 # ╟─9604bc44-ee1b-11ea-28f8-7f7af8d0cbb2
 # ╟─f714699e-ee07-11ea-08b6-5f5169861b57
