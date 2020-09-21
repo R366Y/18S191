@@ -210,7 +210,7 @@ Let's load a picture of Philip again.
 """
 
 # ╔═╡ c5484572-ee05-11ea-0424-f37295c3072d
-#philip_file = load("philip.jpg")
+# philip_file = download("https://i.imgur.com/VGPeJ6s.jpg")
 
 # ╔═╡ e86ed944-ee05-11ea-3e0f-d70fc73b789c
 md"_Hi there Philip_"
@@ -822,8 +822,11 @@ For simplicity you can choose one of the "channels" (colours) in the image to ap
 
 # ╔═╡ 9eeb876c-ee15-11ea-1794-d3ea79f47b75
 function with_sobel_edge_detect(image)
-	
-	return missing
+	Sx = [1 0 -1; 2 0 -2; 1 0 -1]
+	Sy = [1 2 1; 0 0 0; -1 -2 -1]
+	c_x = convolve_image(image, Sx)
+	c_y = convolve_image(image, Sy)
+	return Gray.(sqrt.(c_x.^2 + c_y.^2))
 end
 
 # ╔═╡ 1b85ee76-ee10-11ea-36d7-978340ef61e6
