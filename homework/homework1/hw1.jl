@@ -385,6 +385,7 @@ The image is unrecognisable with intensity ...
 decimate(image, ratio=5) = image[1:ratio:end, 1:ratio:end]
 
 # ╔═╡ c8ecfe5c-ee05-11ea-322b-4b2714898831
+#
 philip = let
 	original = Images.load("philip.jpg")
 	decimate(original, 8)
