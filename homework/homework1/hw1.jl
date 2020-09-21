@@ -317,10 +317,10 @@ md"""
 
 # ╔═╡ f6e2cb2a-ee07-11ea-06ee-1b77e34c1e91
 begin
-	function clamp(n)
-		return max(min(n, one(n)), zero(n))
-	end
 	function noisify(x::Number, s)
+		function clamp(n)
+			return max(min(n, one(n)), zero(n))
+		end
 		n = rand(-s:s)
 		return clamp(x + n)
 	end
@@ -464,13 +464,8 @@ A better solution is to use the *closest* value that is inside the vector. Effec
 # ╔═╡ 802bec56-ee09-11ea-043e-51cf1db02a34
 function extend(v, i)
 	l = length(v)
-	if i ∈ 1:l
-		return v[i]
-	elseif i < 1
-		return v[1]
-	else 
-		return v[l]
-	end
+	i = clamp(i, 1, l)
+	return v[i]
 end
 
 # ╔═╡ b7f3994c-ee1b-11ea-211a-d144db8eafc2
@@ -565,18 +560,16 @@ Again, we need to take care about what happens if $v_{i -n }$ falls off the end 
 
 # ╔═╡ 28e20950-ee0c-11ea-0e0a-b5f2e570b56e
 function convolve_vector(v, k)
-	c_v = copy(v)
+	c_v = Float64.(copy(v))
 	l = (length(k)-1) ÷ 2
 	for i in eachindex(c_v)
-		temp = []
-		n = 1
-		for y in i-l:i+l
-			vi = extend(v,y)
-			kn = k[n]
-			push!(temp, vi*kn)
-			n += 1
+		s = 0
+		for y in -l:l
+			vi = extend(v,y+i)
+			kn = k[y+l+1]
+			s+=vi*kn
 		end
-		c_v[i] = sum(temp) 
+		c_v[i] = s 
 	end
 	return c_v
 end
@@ -611,15 +604,19 @@ For simplicity you can take $\sigma=1$.
 
 # ╔═╡ 1c8b4658-ee0c-11ea-2ede-9b9ed7d3125e
 function gaussian_kernel(n)
-	
-	return missing
+    σ = 1
+    l = (n - 1) ÷ 2
+    x = [i for i in -l:l]
+    G(x) = (1/(sqrt(2*pi*σ^2))) * exp(-x^2 / 2σ^2)
+    return G.(x) / sum(G.(x))
 end
 
 # ╔═╡ f8bd22b8-ee14-11ea-04aa-ab16fd01826e
 md"Let's test your kernel function!"
 
 # ╔═╡ 2a9dd06a-ee13-11ea-3f84-67bb309c77a8
-gaussian_kernel_size_1D = 3 # change this value, or turn me into a slider!
+#gaussian_kernel_size_1D = 3 # change this value, or turn me into a slider!
+@bind gaussian_kernel_size_1D Slider(0:10, show_value=true)
 
 # ╔═╡ 38eb92f6-ee13-11ea-14d7-a503ac04302e
 test_gauss_1D_a = let
@@ -672,8 +669,10 @@ md"""
 
 # ╔═╡ 7c2ec6c6-ee15-11ea-2d7d-0d9401a5e5d1
 function extend_mat(M::AbstractMatrix, i, j)
-	
-	return missing
+	num_rows, num_cols = size(M)
+	r = clamp(i, 1, num_rows)
+	c = clamp(j, 1, num_cols)
+	return M[r,c]
 end
 
 # ╔═╡ 9afc4dca-ee16-11ea-354f-1d827aaa61d2
@@ -708,8 +707,13 @@ md"""
 
 # ╔═╡ 8b96e0bc-ee15-11ea-11cd-cfecea7075a0
 function convolve_image(M::AbstractMatrix, K::AbstractMatrix)
-	
-	return missing
+    R = copy(M)
+    m_rows, m_cols = size(M)
+    lr, lc = (size(K) .-1) .÷ 2
+    for i in 1:m_rows, j in 1:m_cols
+        R[i,j] = clamp01(sum([extend_mat(M, x, y) for x in -lr+i:lr+i, y in -lc+j:lc+j].*K))
+    end
+	return R
 end
 
 # ╔═╡ 5a5135c6-ee1e-11ea-05dc-eb0c683c2ce5
@@ -731,8 +735,15 @@ convolve_image(test_image_with_border, K_test)
 # ╔═╡ 6e53c2e6-ee1e-11ea-21bd-c9c05381be07
 md"_Edit_ `K_test` _to create your own test case!_"
 
+# ╔═╡ a43f0580-fbfe-11ea-0052-dd5d02c1f44e
+K_test2 = [
+	0   0  0
+	-1 3  -1
+	0   0  0
+]
+
 # ╔═╡ e7f8b41a-ee25-11ea-287a-e75d33fbd98b
-convolve_image(philip, K_test)
+convolve_image(philip, K_test2)
 
 # ╔═╡ 8a335044-ee19-11ea-0255-b9391246d231
 md"""
@@ -1494,7 +1505,7 @@ with_sobel_edge_detect(sobel_camera_image)
 # ╠═807e5662-ee09-11ea-3005-21fdcc36b023
 # ╟─808deca8-ee09-11ea-0ee3-1586fa1ce282
 # ╟─809f5330-ee09-11ea-0e5b-415044b6ac1f
-# ╟─ca1ac5f4-ee1c-11ea-3d00-ff5268866f87
+# ╠═ca1ac5f4-ee1c-11ea-3d00-ff5268866f87
 # ╠═157adc9e-fb6a-11ea-3ae5-df58214a7d49
 # ╠═7b2f0420-fb6c-11ea-078a-7dd19c79a511
 # ╟─ea435e58-ee11-11ea-3785-01af8dd72360
@@ -1514,7 +1525,7 @@ with_sobel_edge_detect(sobel_camera_image)
 # ╟─bc1c20a4-ee14-11ea-3525-63c9fa78f089
 # ╠═24c21c7c-ee14-11ea-1512-677980db1288
 # ╟─27847dc4-ee0a-11ea-0651-ebbbb3cfd58c
-# ╠═b01858b6-edf3-11ea-0826-938d33c19a43
+# ╟─b01858b6-edf3-11ea-0826-938d33c19a43
 # ╟─7c1bc062-ee15-11ea-30b1-1b1e76520f13
 # ╠═7c2ec6c6-ee15-11ea-2d7d-0d9401a5e5d1
 # ╟─649df270-ee24-11ea-397e-79c4355e38db
@@ -1530,10 +1541,11 @@ with_sobel_edge_detect(sobel_camera_image)
 # ╠═8b96e0bc-ee15-11ea-11cd-cfecea7075a0
 # ╟─0cabed84-ee1e-11ea-11c1-7d8a4b4ad1af
 # ╟─5a5135c6-ee1e-11ea-05dc-eb0c683c2ce5
-# ╟─577c6daa-ee1e-11ea-1275-b7abc7a27d73
+# ╠═577c6daa-ee1e-11ea-1275-b7abc7a27d73
 # ╠═275a99c8-ee1e-11ea-0a76-93e3618c9588
 # ╠═42dfa206-ee1e-11ea-1fcd-21671042064c
 # ╟─6e53c2e6-ee1e-11ea-21bd-c9c05381be07
+# ╠═a43f0580-fbfe-11ea-0052-dd5d02c1f44e
 # ╠═e7f8b41a-ee25-11ea-287a-e75d33fbd98b
 # ╟─8a335044-ee19-11ea-0255-b9391246d231
 # ╠═7c50ea80-ee15-11ea-328f-6b4e4ff20b7e
