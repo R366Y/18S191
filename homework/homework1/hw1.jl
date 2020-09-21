@@ -563,13 +563,7 @@ function convolve_vector(v, k)
 	c_v = Float64.(copy(v))
 	l = (length(k)-1) ÷ 2
 	for i in eachindex(c_v)
-		s = 0
-		for y in -l:l
-			vi = extend(v,y+i)
-			kn = k[y+l+1]
-			s+=vi*kn
-		end
-		c_v[i] = s 
+		c_v[i] = sum([extend(v,x) for x in i-l:i+l] .* k) 
 	end
 	return c_v
 end
@@ -711,7 +705,9 @@ function convolve_image(M::AbstractMatrix, K::AbstractMatrix)
     m_rows, m_cols = size(M)
     lr, lc = (size(K) .-1) .÷ 2
     for i in 1:m_rows, j in 1:m_cols
-        R[i,j] = clamp01(sum([extend_mat(M, x, y) for x in -lr+i:lr+i, y in -lc+j:lc+j].*K))
+        R[i,j] = clamp01(
+			sum([extend_mat(M, x, y) for x in -lr+i:lr+i, y in -lc+j:lc+j].*K)
+		)
     end
 	return R
 end
@@ -764,10 +760,18 @@ Here, the 2D Gaussian kernel will be defined as
 $$G(x,y)=\frac{1}{2\pi \sigma^2}e^{\frac{-(x^2+y^2)}{2\sigma^2}}$$
 """
 
+# ╔═╡ 1e98d430-fc10-11ea-3925-d994a31aac54
+
+
 # ╔═╡ aad67fd0-ee15-11ea-00d4-274ec3cda3a3
 function with_gaussian_blur(image)
-	
-	return missing
+	σ = 1
+	n = 3
+	G(x,y) = 1/(2*pi*σ^2) * exp(-(x^2+y^2)/(2*σ^2))
+    l = (n - 1) ÷ 2
+	k = [G(i,j) for i in -l:l, j in -l:l]
+	k = k/sum(k)
+	return convolve_image(image, k)
 end
 
 # ╔═╡ 8ae59674-ee18-11ea-3815-f50713d0fa08
@@ -1519,7 +1523,7 @@ with_sobel_edge_detect(sobel_camera_image)
 # ╟─80b7566a-ee09-11ea-3939-6fab470f9ec8
 # ╠═1c8b4658-ee0c-11ea-2ede-9b9ed7d3125e
 # ╟─f8bd22b8-ee14-11ea-04aa-ab16fd01826e
-# ╠═2a9dd06a-ee13-11ea-3f84-67bb309c77a8
+# ╟─2a9dd06a-ee13-11ea-3f84-67bb309c77a8
 # ╟─b424e2aa-ee14-11ea-33fa-35491e0b9c9d
 # ╠═38eb92f6-ee13-11ea-14d7-a503ac04302e
 # ╟─bc1c20a4-ee14-11ea-3525-63c9fa78f089
@@ -1548,7 +1552,8 @@ with_sobel_edge_detect(sobel_camera_image)
 # ╠═a43f0580-fbfe-11ea-0052-dd5d02c1f44e
 # ╠═e7f8b41a-ee25-11ea-287a-e75d33fbd98b
 # ╟─8a335044-ee19-11ea-0255-b9391246d231
-# ╠═7c50ea80-ee15-11ea-328f-6b4e4ff20b7e
+# ╟─7c50ea80-ee15-11ea-328f-6b4e4ff20b7e
+# ╠═1e98d430-fc10-11ea-3925-d994a31aac54
 # ╠═aad67fd0-ee15-11ea-00d4-274ec3cda3a3
 # ╟─8ae59674-ee18-11ea-3815-f50713d0fa08
 # ╟─94c0798e-ee18-11ea-3212-1533753eabb6
