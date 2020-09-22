@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.11.13
+# v0.11.14
 
 using Markdown
 using InteractiveUtils
@@ -46,24 +46,40 @@ md"""
 md"Select an image below!"
 
 # ╔═╡ 90f44be8-f35c-11ea-2fc6-c361fd4966af
+# @bind image_url Select([
+# "https://cdn.shortpixel.ai/spai/w_1086+q_lossy+ret_img+to_webp/https://wisetoast.com/wp-content/uploads/2015/10/The-Persistence-of-Memory-salvador-deli-painting.jpg",
+
+# "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Gustave_Caillebotte_-_Paris_Street%3B_Rainy_Day_-_Google_Art_Project.jpg/1014px-Gustave_Caillebotte_-_Paris_Street%3B_Rainy_Day_-_Google_Art_Project.jpg",
+
+# "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Gustave_Caillebotte_-_Paris_Street%3B_Rainy_Day_-_Google_Art_Project.jpg/1014px-Gustave_Caillebotte_-_Paris_Street%3B_Rainy_Day_-_Google_Art_Project.jpg",
+
+# "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Grant_Wood_-_American_Gothic_-_Google_Art_Project.jpg/480px-Grant_Wood_-_American_Gothic_-_Google_Art_Project.jpg",
+# 		"https://cdn.shortpixel.ai/spai/w_1086+q_lossy+ret_img+to_webp/https://wisetoast.com/wp-content/uploads/2015/10/The-Persistence-of-Memory-salvador-deli-painting.jpg",
+
+# "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg/640px-A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg",
+
+# "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/758px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
+# 		"https://web.mit.edu/facilities/photos/construction/Projects/stata/1_large.jpg",
+# 	])
 @bind image_url Select([
-"https://cdn.shortpixel.ai/spai/w_1086+q_lossy+ret_img+to_webp/https://wisetoast.com/wp-content/uploads/2015/10/The-Persistence-of-Memory-salvador-deli-painting.jpg",
+"The-Persistence-of-Memory-salvador-deli-painting.jpg",
 
-"https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Gustave_Caillebotte_-_Paris_Street%3B_Rainy_Day_-_Google_Art_Project.jpg/1014px-Gustave_Caillebotte_-_Paris_Street%3B_Rainy_Day_-_Google_Art_Project.jpg",
+"Paris_Street_Rainy_Day.jpg",
 
-"https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Gustave_Caillebotte_-_Paris_Street%3B_Rainy_Day_-_Google_Art_Project.jpg/1014px-Gustave_Caillebotte_-_Paris_Street%3B_Rainy_Day_-_Google_Art_Project.jpg",
+"American_Gothic.jpg",
+		
+"The-Persistence-of-Memory-salvador-deli-painting.jpg",
 
-"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Grant_Wood_-_American_Gothic_-_Google_Art_Project.jpg/480px-Grant_Wood_-_American_Gothic_-_Google_Art_Project.jpg",
-		"https://cdn.shortpixel.ai/spai/w_1086+q_lossy+ret_img+to_webp/https://wisetoast.com/wp-content/uploads/2015/10/The-Persistence-of-Memory-salvador-deli-painting.jpg",
+"A_Sunday_on_La_Grande_.jpg",
 
-"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg/640px-A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg",
+"Van_Gogh_-_Starry_Night.jpg",
 
-"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/758px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
-		"https://web.mit.edu/facilities/photos/construction/Projects/stata/1_large.jpg",
+"1_large.jpg",
 	])
 
 # ╔═╡ d2ae6dd2-eef9-11ea-02df-255ec3b46a36
-img = load(download(image_url))
+#img = load(download(image_url))
+img = load(image_url)
 
 # ╔═╡ 8ded023c-f35c-11ea-317c-11f5d1b67998
 
@@ -437,11 +453,11 @@ end
 # ╠═0316b94c-eef6-11ea-19bc-dbc959901bb5
 # ╟─cb335074-eef7-11ea-24e8-c39a325166a1
 # ╟─bf750d0e-f35c-11ea-0245-713584583fcf
-# ╟─90f44be8-f35c-11ea-2fc6-c361fd4966af
-# ╟─d2ae6dd2-eef9-11ea-02df-255ec3b46a36
+# ╠═90f44be8-f35c-11ea-2fc6-c361fd4966af
+# ╠═d2ae6dd2-eef9-11ea-02df-255ec3b46a36
 # ╠═8ded023c-f35c-11ea-317c-11f5d1b67998
 # ╟─0b6010a8-eef6-11ea-3ad6-c1f10e30a413
-# ╠═fc1c43cc-eef6-11ea-0fc4-a90ac4336964
+# ╟─fc1c43cc-eef6-11ea-0fc4-a90ac4336964
 # ╟─82c0d0c8-efec-11ea-1bb9-83134ecb877e
 # ╠═da726954-eff0-11ea-21d4-a7f4ae4a6b09
 # ╠═da39c824-eff0-11ea-375b-1b6c6e186182

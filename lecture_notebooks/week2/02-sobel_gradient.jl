@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.11.10
+# v0.11.14
 
 using Markdown
 using InteractiveUtils
@@ -16,7 +16,7 @@ end
 # ╔═╡ 15a4ba3e-f0d1-11ea-2ef1-5ff1dee8795f
 using Pkg
 
-# ╔═╡ 21e744b8-f0d1-11ea-2e09-7ffbcdf43c37
+# ╔═╡ c4834690-fcb1-11ea-04d0-fde0e005fcbb
 begin
 	Pkg.activate(mktempdir())
 	
@@ -28,6 +28,7 @@ begin
 	Pkg.add("Images")
 	Pkg.add("ImageMagick")
 	Pkg.add("ImageFiltering")
+	Pkg.add("PlutoUI")
 	
 	using Gadfly
 	using Images
@@ -236,18 +237,18 @@ end
 
 # ╔═╡ Cell order:
 # ╠═15a4ba3e-f0d1-11ea-2ef1-5ff1dee8795f
-# ╠═1ab1c808-f0d1-11ea-03a7-e9854427d45f
-# ╟─21e744b8-f0d1-11ea-2e09-7ffbcdf43c37
+# ╟─1ab1c808-f0d1-11ea-03a7-e9854427d45f
+# ╠═c4834690-fcb1-11ea-04d0-fde0e005fcbb
 # ╠═10f850fc-f0d1-11ea-2a58-2326a9ea1e2a
 # ╟─7b4d5270-f0d3-11ea-0b48-79005f20602c
 # ╠═6fd3b7a4-f0d3-11ea-1f26-fb9740cd16e0
 # ╟─fe3559e0-f13b-11ea-06c8-a314e44c20d6
 # ╟─b7ea8a28-f0d7-11ea-3e98-7b19a1f58304
-# ╟─0ccf76e4-f0d9-11ea-07c9-0159e3d4d733
+# ╠═0ccf76e4-f0d9-11ea-07c9-0159e3d4d733
 # ╟─236dab08-f13d-11ea-1922-a3b82cfc7f51
-# ╟─03434682-f13b-11ea-2b6e-11ad781e9a51
+# ╠═03434682-f13b-11ea-2b6e-11ad781e9a51
 # ╟─ca13597a-f168-11ea-1a2c-ff7b98b7b2c7
-# ╟─f22aa34e-f0df-11ea-3053-3dcdc070ec2f
+# ╠═f22aa34e-f0df-11ea-3053-3dcdc070ec2f
 # ╟─9232dcc8-f188-11ea-08fe-b787ea93c598
 # ╠═7864bd00-f146-11ea-0020-7fccb3913d8b
 # ╠═b369584c-f183-11ea-260a-35dc797e63ad
