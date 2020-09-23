@@ -334,8 +334,24 @@ random_seam(m, n, i) = reduce((a, b) -> [a..., clamp(last(a) + rand(-1:1), 1, n)
 
 # ╔═╡ abf20aa0-f31b-11ea-2548-9bea4fab4c37
 function greedy_seam(energies, starting_pixel::Int)
-	# you can delete the body of this function - it's just a placeholder.
-	#random_seam(size(energies)..., starting_pixel)
+    m, n = size(energies)
+    res = [starting_pixel]
+    for r in 2:m
+        i,j = max(1, starting_pixel-1), min(starting_pixel+1, n)
+        sub_array = @view energies[r, i:j]
+        lenght_subarray = length(sub_array)
+        relative_pos = findmin(sub_array)[2]
+        position_map = [-1:1...]
+        if i == 1 && lenght_subarray == 2
+            position_map = [0,1]
+        elseif j==n && lenght_subarray == 2
+            position_map = [-1,0]
+        end
+        starting_pixel += position_map[relative_pos]
+        starting_pixel = clamp(starting_pixel, 1, n)
+        push!(res, starting_pixel)
+    end
+    return res
 end
 
 # ╔═╡ 5430d772-f397-11ea-2ed8-03ee06d02a22
@@ -894,12 +910,12 @@ bigbreak
 # ╟─5430d772-f397-11ea-2ed8-03ee06d02a22
 # ╟─f580527e-f397-11ea-055f-bb9ea8f12015
 # ╟─6f52c1a2-f395-11ea-0c8a-138a77f03803
-# ╟─2a7e49b8-f395-11ea-0058-013e51baa554
+# ╠═2a7e49b8-f395-11ea-0058-013e51baa554
 # ╟─7ddee6fc-f394-11ea-31fc-5bd665a65bef
 # ╟─980b1104-f394-11ea-0948-21002f26ee25
 # ╟─9945ae78-f395-11ea-1d78-cf6ad19606c8
 # ╟─87efe4c2-f38d-11ea-39cc-bdfa11298317
-# ╟─f6571d86-f388-11ea-0390-05592acb9195
+# ╠═f6571d86-f388-11ea-0390-05592acb9195
 # ╟─f626b222-f388-11ea-0d94-1736759b5f52
 # ╟─52452d26-f36c-11ea-01a6-313114b4445d
 # ╠═2a98f268-f3b6-11ea-1eea-81c28256a19e
