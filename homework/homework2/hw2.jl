@@ -428,9 +428,15 @@ function least_energy(energies, i, j)
 	# if i == something
 	#    return energies[...] # no need for recursive computation in the base case!
 	# end
-	#
-	# induction
-	# combine results from recursive calls to `least_energy`.
+	m, n = size(energies)
+    if i == m
+		return (energies[i,j],j)
+    end
+    k,l = max(1, j-1), min(j+1, n)
+	energy,index =  findmin([least_energy(energies, i+1,y)[1] for y in k:l])
+	energy+=energies[i,j]
+	index = [k:l...][index]
+	return (energy, index)
 end
 
 # ╔═╡ a7f3d9f8-f3bb-11ea-0c1a-55bbb8408f09
@@ -469,7 +475,8 @@ This will give you the method used in the lecture to perform [exhaustive search 
 function recursive_seam(energies, starting_pixel)
 	m, n = size(energies)
 	# Replace the following line with your code.
-	[rand(1:starting_pixel) for i=1:m]
+	#[rand(1:starting_pixel) for i=1:m]
+	[least_energy(energies, i, starting_pixel)[2] for i=1:m]
 end
 
 # ╔═╡ 1d55333c-f393-11ea-229a-5b1e9cabea6a
@@ -706,7 +713,11 @@ end
 
 # ╔═╡ ddba07dc-f3b7-11ea-353e-0f67713727fc
 # Do not make this image bigger, it will be infeasible to compute.
-pika = decimate(load(download("https://art.pixilart.com/901d53bcda6b27b.png")),150)
+#pika = decimate(load(download("https://art.pixilart.com/901d53bcda6b27b.png")),150)
+pika = decimate(load("pika.png"),150)
+
+# ╔═╡ 1fa9e2f0-fe69-11ea-0151-9f3c885faf06
+pika
 
 # ╔═╡ 73b52fd6-f3b9-11ea-14ed-ebfcab1ce6aa
 size(pika)
@@ -922,6 +933,7 @@ bigbreak
 # ╟─32e9a944-f3b6-11ea-0e82-1dff6c2eef8d
 # ╟─9101d5a0-f371-11ea-1c04-f3f43b96ca4a
 # ╠═ddba07dc-f3b7-11ea-353e-0f67713727fc
+# ╠═1fa9e2f0-fe69-11ea-0151-9f3c885faf06
 # ╠═73b52fd6-f3b9-11ea-14ed-ebfcab1ce6aa
 # ╠═8ec27ef8-f320-11ea-2573-c97b7b908cb7
 # ╟─9f18efe2-f38e-11ea-0871-6d7760d0b2f6
@@ -962,8 +974,8 @@ bigbreak
 # ╟─0fbe2af6-f381-11ea-2f41-23cd1cf930d9
 # ╟─48089a00-f321-11ea-1479-e74ba71df067
 # ╟─6b4d6584-f3be-11ea-131d-e5bdefcc791b
-# ╟─437ba6ce-f37d-11ea-1010-5f6a6e282f9b
-# ╟─ef88c388-f388-11ea-3828-ff4db4d1874e
+# ╠═437ba6ce-f37d-11ea-1010-5f6a6e282f9b
+# ╠═ef88c388-f388-11ea-3828-ff4db4d1874e
 # ╟─ef26374a-f388-11ea-0b4e-67314a9a9094
 # ╟─6bdbcf4c-f321-11ea-0288-fb16ff1ec526
 # ╟─ffc17f40-f380-11ea-30ee-0fe8563c0eb1
