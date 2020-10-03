@@ -112,16 +112,10 @@ md"""👉 Write a function `demean`, which takes a vector `x` and subtracts the 
 
 # ╔═╡ ec5efe8c-edef-11ea-2c6f-afaaeb5bc50c
 function demean(x)
+<<<<<<< HEAD
 	return mean(x).-x
-end
-
-# ╔═╡ 29e10640-edf0-11ea-0398-17dbf4242de3
-md"Let's check that the mean of the `demean(random_vect)` is 0:
-
-_Due to floating-point round-off error it may *not* be *exactly* 0._"
-
-# ╔═╡ 6f67657e-ee1a-11ea-0c2f-3d567bcfa6ea
-if ismissing(random_vect)
+=======
+	
 	md"""
 	!!! info
 	    The following cells error because `random_vect` is not yet defined. Have you done the first exercise?
@@ -143,9 +137,14 @@ md"""
 
 # ╔═╡ b6b65b94-edf0-11ea-3686-fbff0ff53d08
 function create_bar()
+<<<<<<< HEAD
 	v = zero(Vector{Int}(undef,100))
 	v[40:60] .= 1
 	return v
+=======
+	
+	return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 end
 
 # ╔═╡ 22f28dae-edf2-11ea-25b5-11c369ae1253
@@ -157,8 +156,13 @@ md"""
 
 # ╔═╡ 8c19fb72-ed6c-11ea-2728-3fa9219eddc4
 function vecvec_to_matrix(vecvec)
+<<<<<<< HEAD
 	dim_2 = length(vecvec[1])
 	return vcat(reshape.(vecvec, :, dim_2)...)
+=======
+	
+	return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 end
 
 # ╔═╡ c4761a7e-edf2-11ea-1e75-118e73dadbed
@@ -173,12 +177,17 @@ md"""
 
 # ╔═╡ 9f1c6d04-ed6c-11ea-007b-75e7e780703d
 function matrix_to_vecvec(matrix)
+<<<<<<< HEAD
 	dims = size(matrix)
 	res = []
 	for row in 1:dims[1]
 		push!(res, push!([], matrix[row,:]...))
 	end
 	return res
+=======
+	
+	return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 end
 
 # ╔═╡ 70955aca-ed6e-11ea-2330-89b4d20b1795
@@ -210,7 +219,11 @@ Let's load a picture of Philip again.
 """
 
 # ╔═╡ c5484572-ee05-11ea-0424-f37295c3072d
+<<<<<<< HEAD
 # philip_file = download("https://i.imgur.com/VGPeJ6s.jpg")
+=======
+philip_file = download("https://i.imgur.com/VGPeJ6s.jpg")
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 
 # ╔═╡ e86ed944-ee05-11ea-3e0f-d70fc73b789c
 md"_Hi there Philip_"
@@ -223,8 +236,13 @@ md"""
 
 # ╔═╡ f6898df6-ee07-11ea-2838-fde9bc739c11
 function mean_colors(image)
+<<<<<<< HEAD
 	cv = channelview(image)
 	return (mean(cv[1,:,:]), mean(cv[2,:,:]), mean(cv[3,:,:]))
+=======
+	
+	return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 end
 
 # ╔═╡ d75ec078-ee0d-11ea-3723-71fb8eecb040
@@ -240,16 +258,29 @@ md"""
 begin
 	function quantize(x::Number)
 		
+<<<<<<< HEAD
 		return floor(x*10)/10
 	end
 	
 	function quantize(color::AbstractRGB)
 		return RGB(quantize(color.r), quantize(color.g), quantize(color.b))
+=======
+		return missing
+	end
+	
+	function quantize(color::AbstractRGB)
+		# you will write me in a later exercise!
+		return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 	end
 	
 	function quantize(image::AbstractMatrix)
 		# you will write me in a later exercise!
+<<<<<<< HEAD
 		return quantize.(image)
+=======
+		return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 	end
 end
 
@@ -288,7 +319,11 @@ md"""
 # ╔═╡ 63e8d636-ee0b-11ea-173d-bd3327347d55
 function invert(color::AbstractRGB)
 	
+<<<<<<< HEAD
 	return RGB(1-color.r, 1-color.g, 1-color.b)
+=======
+	return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 end
 
 # ╔═╡ 2cc2f84e-ee0d-11ea-373b-e7ad3204bb00
@@ -309,6 +344,12 @@ invert(red)
 # ╔═╡ 846b1330-ee0b-11ea-3579-7d90fafd7290
 md"Can you invert the picture of Philip?"
 
+<<<<<<< HEAD
+=======
+# ╔═╡ 943103e2-ee0b-11ea-33aa-75a8a1529931
+philip_inverted = missing
+
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 # ╔═╡ f6d6c71a-ee07-11ea-2b63-d759af80707b
 md"""
 #### Exercise 2.6
@@ -318,21 +359,34 @@ md"""
 # ╔═╡ f6e2cb2a-ee07-11ea-06ee-1b77e34c1e91
 begin
 	function noisify(x::Number, s)
+<<<<<<< HEAD
 		function clamp(n)
 			return max(min(n, one(n)), zero(n))
 		end
 		n = rand(-s:s)
 		return clamp(x + n)
+=======
+
+		return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 	end
 	
 	function noisify(color::AbstractRGB, s)
 		# you will write me in a later exercise!
+<<<<<<< HEAD
 		return RGB(noisify(color.r,s), noisify(color.g,s), noisify(color.b,s))
+=======
+		return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 	end
 	
 	function noisify(image::AbstractMatrix, s)
 		# you will write me in a later exercise!
+<<<<<<< HEAD
 		return noisify.(image,s)
+=======
+		return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 	end
 end
 
@@ -385,9 +439,14 @@ The image is unrecognisable with intensity ...
 decimate(image, ratio=5) = image[1:ratio:end, 1:ratio:end]
 
 # ╔═╡ c8ecfe5c-ee05-11ea-322b-4b2714898831
+<<<<<<< HEAD
 #
 philip = let
 	original = Images.load("philip.jpg")
+=======
+philip = let
+	original = Images.load(philip_file)
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 	decimate(original, 8)
 end
 
@@ -397,9 +456,12 @@ mean_colors(philip)
 # ╔═╡ 9751586e-ee0c-11ea-0cbb-b7eda92977c9
 quantize(philip)
 
+<<<<<<< HEAD
 # ╔═╡ 943103e2-ee0b-11ea-33aa-75a8a1529931
 philip_inverted = invert.(philip)
 
+=======
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 # ╔═╡ ac15e0d0-ee0c-11ea-1eaf-d7f88b5df1d7
 noisify(philip, philip_noise)
 
@@ -447,7 +509,11 @@ You've seen some colored lines in this notebook to visualize arrays. Can you mak
 """
 
 # ╔═╡ 01070e28-ee0f-11ea-1928-a7919d452bdd
+<<<<<<< HEAD
 colored_line(v)
+=======
+
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 
 # ╔═╡ 7522f81e-ee1c-11ea-35af-a17eb257ff1a
 md"Try changing `n` and `v` around. Notice that you can run the cell `v = rand(n)` again to regenerate new random values."
@@ -464,9 +530,14 @@ A better solution is to use the *closest* value that is inside the vector. Effec
 
 # ╔═╡ 802bec56-ee09-11ea-043e-51cf1db02a34
 function extend(v, i)
+<<<<<<< HEAD
 	l = length(v)
 	i = clamp(i, 1, l)
 	return v[i]
+=======
+	
+	return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 end
 
 # ╔═╡ b7f3994c-ee1b-11ea-211a-d144db8eafc2
@@ -505,6 +576,7 @@ md"""
 
 # ╔═╡ 807e5662-ee09-11ea-3005-21fdcc36b023
 function blur_1D(v, l)
+<<<<<<< HEAD
 	v_copy = copy(v)
 	v_copy_length = length(v_copy)
 	
@@ -512,6 +584,10 @@ function blur_1D(v, l)
 		v_copy[i] = mean([extend(v,k) for k in i-l:i+l])
 	end
 	return v_copy
+=======
+	
+	return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 end
 
 # ╔═╡ 808deca8-ee09-11ea-0ee3-1586fa1ce282
@@ -537,6 +613,7 @@ md"""
 """
 
 # ╔═╡ ca1ac5f4-ee1c-11ea-3d00-ff5268866f87
+<<<<<<< HEAD
 @bind l_box Slider(0:8, show_value=true)
 
 # ╔═╡ 157adc9e-fb6a-11ea-3ae5-df58214a7d49
@@ -544,6 +621,9 @@ colored_line(v)
 
 # ╔═╡ 7b2f0420-fb6c-11ea-078a-7dd19c79a511
 colored_line(blur_1D(v, l_box))
+=======
+
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 
 # ╔═╡ 80ab64f4-ee09-11ea-29b4-498112ed0799
 md"""
@@ -561,12 +641,17 @@ Again, we need to take care about what happens if $v_{i -n }$ falls off the end 
 
 # ╔═╡ 28e20950-ee0c-11ea-0e0a-b5f2e570b56e
 function convolve_vector(v, k)
+<<<<<<< HEAD
 	c_v = Float64.(copy(v))
 	l = (length(k)-1) ÷ 2
 	for i in eachindex(c_v)
 		c_v[i] = sum([extend(v,x) for x in i-l:i+l] .* k) 
 	end
 	return c_v
+=======
+	
+	return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 end
 
 # ╔═╡ 93284f92-ee12-11ea-0342-833b1a30625c
@@ -599,19 +684,28 @@ For simplicity you can take $\sigma=1$.
 
 # ╔═╡ 1c8b4658-ee0c-11ea-2ede-9b9ed7d3125e
 function gaussian_kernel(n)
+<<<<<<< HEAD
     σ = 1
     l = (n - 1) ÷ 2
     x = [i for i in -l:l]
     G(x) = (1/(sqrt(2*pi*σ^2))) * exp(-x^2 / 2σ^2)
     return G.(x) / sum(G.(x))
+=======
+	
+	return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 end
 
 # ╔═╡ f8bd22b8-ee14-11ea-04aa-ab16fd01826e
 md"Let's test your kernel function!"
 
 # ╔═╡ 2a9dd06a-ee13-11ea-3f84-67bb309c77a8
+<<<<<<< HEAD
 #gaussian_kernel_size_1D = 3 # change this value, or turn me into a slider!
 @bind gaussian_kernel_size_1D Slider(0:10, show_value=true)
+=======
+gaussian_kernel_size_1D = 3 # change this value, or turn me into a slider!
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 
 # ╔═╡ 38eb92f6-ee13-11ea-14d7-a503ac04302e
 test_gauss_1D_a = let
@@ -664,10 +758,15 @@ md"""
 
 # ╔═╡ 7c2ec6c6-ee15-11ea-2d7d-0d9401a5e5d1
 function extend_mat(M::AbstractMatrix, i, j)
+<<<<<<< HEAD
 	num_rows, num_cols = size(M)
 	r = clamp(i, 1, num_rows)
 	c = clamp(j, 1, num_cols)
 	return M[r,c]
+=======
+	
+	return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 end
 
 # ╔═╡ 9afc4dca-ee16-11ea-354f-1d827aaa61d2
@@ -702,6 +801,7 @@ md"""
 
 # ╔═╡ 8b96e0bc-ee15-11ea-11cd-cfecea7075a0
 function convolve_image(M::AbstractMatrix, K::AbstractMatrix)
+<<<<<<< HEAD
     R = copy(M)
     m_rows, m_cols = size(M)
     lr, lc = (size(K) .-1) .÷ 2
@@ -711,6 +811,10 @@ function convolve_image(M::AbstractMatrix, K::AbstractMatrix)
 		)
     end
 	return R
+=======
+	
+	return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 end
 
 # ╔═╡ 5a5135c6-ee1e-11ea-05dc-eb0c683c2ce5
@@ -732,6 +836,7 @@ convolve_image(test_image_with_border, K_test)
 # ╔═╡ 6e53c2e6-ee1e-11ea-21bd-c9c05381be07
 md"_Edit_ `K_test` _to create your own test case!_"
 
+<<<<<<< HEAD
 # ╔═╡ a43f0580-fbfe-11ea-0052-dd5d02c1f44e
 K_test2 = [
 	0   0  0
@@ -741,6 +846,10 @@ K_test2 = [
 
 # ╔═╡ e7f8b41a-ee25-11ea-287a-e75d33fbd98b
 convolve_image(philip, K_test2)
+=======
+# ╔═╡ e7f8b41a-ee25-11ea-287a-e75d33fbd98b
+convolve_image(philip, K_test)
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 
 # ╔═╡ 8a335044-ee19-11ea-0255-b9391246d231
 md"""
@@ -761,6 +870,7 @@ Here, the 2D Gaussian kernel will be defined as
 $$G(x,y)=\frac{1}{2\pi \sigma^2}e^{\frac{-(x^2+y^2)}{2\sigma^2}}$$
 """
 
+<<<<<<< HEAD
 # ╔═╡ 1e98d430-fc10-11ea-3925-d994a31aac54
 
 
@@ -773,6 +883,12 @@ function with_gaussian_blur(image)
 	k = [G(i,j) for i in -l:l, j in -l:l]
 	k = k/sum(k)
 	return convolve_image(image, k)
+=======
+# ╔═╡ aad67fd0-ee15-11ea-00d4-274ec3cda3a3
+function with_gaussian_blur(image)
+	
+	return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 end
 
 # ╔═╡ 8ae59674-ee18-11ea-3815-f50713d0fa08
@@ -823,11 +939,16 @@ For simplicity you can choose one of the "channels" (colours) in the image to ap
 
 # ╔═╡ 9eeb876c-ee15-11ea-1794-d3ea79f47b75
 function with_sobel_edge_detect(image)
+<<<<<<< HEAD
 	Sx = [1 0 -1; 2 0 -2; 1 0 -1]
 	Sy = [1 2 1; 0 0 0; -1 -2 -1]
 	c_x = convolve_image(image, Sx)
 	c_y = convolve_image(image, Sy)
 	return Gray.(sqrt.(c_x.^2 + c_y.^2))
+=======
+	
+	return missing
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 end
 
 # ╔═╡ 1b85ee76-ee10-11ea-36d7-978340ef61e6
@@ -1514,8 +1635,11 @@ with_sobel_edge_detect(sobel_camera_image)
 # ╟─808deca8-ee09-11ea-0ee3-1586fa1ce282
 # ╟─809f5330-ee09-11ea-0e5b-415044b6ac1f
 # ╠═ca1ac5f4-ee1c-11ea-3d00-ff5268866f87
+<<<<<<< HEAD
 # ╠═157adc9e-fb6a-11ea-3ae5-df58214a7d49
 # ╠═7b2f0420-fb6c-11ea-078a-7dd19c79a511
+=======
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 # ╟─ea435e58-ee11-11ea-3785-01af8dd72360
 # ╟─80ab64f4-ee09-11ea-29b4-498112ed0799
 # ╠═28e20950-ee0c-11ea-0e0a-b5f2e570b56e
@@ -1527,13 +1651,21 @@ with_sobel_edge_detect(sobel_camera_image)
 # ╟─80b7566a-ee09-11ea-3939-6fab470f9ec8
 # ╠═1c8b4658-ee0c-11ea-2ede-9b9ed7d3125e
 # ╟─f8bd22b8-ee14-11ea-04aa-ab16fd01826e
+<<<<<<< HEAD
 # ╟─2a9dd06a-ee13-11ea-3f84-67bb309c77a8
+=======
+# ╠═2a9dd06a-ee13-11ea-3f84-67bb309c77a8
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 # ╟─b424e2aa-ee14-11ea-33fa-35491e0b9c9d
 # ╠═38eb92f6-ee13-11ea-14d7-a503ac04302e
 # ╟─bc1c20a4-ee14-11ea-3525-63c9fa78f089
 # ╠═24c21c7c-ee14-11ea-1512-677980db1288
 # ╟─27847dc4-ee0a-11ea-0651-ebbbb3cfd58c
+<<<<<<< HEAD
 # ╟─b01858b6-edf3-11ea-0826-938d33c19a43
+=======
+# ╠═b01858b6-edf3-11ea-0826-938d33c19a43
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 # ╟─7c1bc062-ee15-11ea-30b1-1b1e76520f13
 # ╠═7c2ec6c6-ee15-11ea-2d7d-0d9401a5e5d1
 # ╟─649df270-ee24-11ea-397e-79c4355e38db
@@ -1549,6 +1681,7 @@ with_sobel_edge_detect(sobel_camera_image)
 # ╠═8b96e0bc-ee15-11ea-11cd-cfecea7075a0
 # ╟─0cabed84-ee1e-11ea-11c1-7d8a4b4ad1af
 # ╟─5a5135c6-ee1e-11ea-05dc-eb0c683c2ce5
+<<<<<<< HEAD
 # ╠═577c6daa-ee1e-11ea-1275-b7abc7a27d73
 # ╠═275a99c8-ee1e-11ea-0a76-93e3618c9588
 # ╠═42dfa206-ee1e-11ea-1fcd-21671042064c
@@ -1558,6 +1691,15 @@ with_sobel_edge_detect(sobel_camera_image)
 # ╟─8a335044-ee19-11ea-0255-b9391246d231
 # ╟─7c50ea80-ee15-11ea-328f-6b4e4ff20b7e
 # ╠═1e98d430-fc10-11ea-3925-d994a31aac54
+=======
+# ╟─577c6daa-ee1e-11ea-1275-b7abc7a27d73
+# ╠═275a99c8-ee1e-11ea-0a76-93e3618c9588
+# ╠═42dfa206-ee1e-11ea-1fcd-21671042064c
+# ╟─6e53c2e6-ee1e-11ea-21bd-c9c05381be07
+# ╠═e7f8b41a-ee25-11ea-287a-e75d33fbd98b
+# ╟─8a335044-ee19-11ea-0255-b9391246d231
+# ╠═7c50ea80-ee15-11ea-328f-6b4e4ff20b7e
+>>>>>>> 7409e78510383c1d8ffda7c0666a0734e54ee8c2
 # ╠═aad67fd0-ee15-11ea-00d4-274ec3cda3a3
 # ╟─8ae59674-ee18-11ea-3815-f50713d0fa08
 # ╟─94c0798e-ee18-11ea-3212-1533753eabb6
